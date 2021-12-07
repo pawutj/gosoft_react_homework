@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+      const groupByCount = (arr) => {
+        return arr.reduce((res, value) => {
+          if (!res[value]) {
+            res[value] = 0;
+          }
+          res[value] += 1;
+          return res;
+        }, {});
+      };
+
+      const object2Array = (o) => Object.entries(o);
+
       const all = async () => {
         const header = {
           headers: {
@@ -32,11 +44,26 @@
           main_clean.map((endpoint) => axios.get(endpoint, header))
         );
         const allData = allData_raw.map((c) => c.data);
-        console.log(allData);
+        const allData_clean = allData
+          .map((d) => d.map((c) => (c.author ? c.author.login : "")))
+          .flat();
+        groupAllData = object2Array(groupByCount(allData_clean)).sort((a, b) =>
+          a[1] > b[1] ? -1 : 1
+        );
+        console.log(groupAllData);
+        document.getElementById("data").innerHTML = `<table>
+          <tr><td>User Name</td> <td>Contribute</td></tr>
+          ${groupAllData.map(
+            (c) => `<tr><td>${c[0]}  </td><td> ${c[1]}</td></tr>`
+          )}
+          </table>`;
       };
       all();
     </script>
-    <title>Document</title>
+    <title>Top Turtle BNK Contribute</title>
   </head>
-  <body></body>
+  <body>
+    <h1>Top Turtle BNK Contribute</h1>
+    <div id="data"></div>
+  </body>
 </html>
