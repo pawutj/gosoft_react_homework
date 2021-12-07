@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      const all = async () => {
+        const head = axios
+          .get("http://13.213.37.38:3000/await-hw/head.txt")
+          .then((c) => c.data);
+
+        const body = axios
+          .get("http://13.213.37.38:3000/await-hw/body.txt")
+          .then((c) => c.data);
+
+        const leg = axios
+          .get("http://13.213.37.38:3000/await-hw/leg.txt")
+          .then((c) => c.data);
+
+        const feet = axios
+          .get("http://13.213.37.38:3000/await-hw/feet.txt")
+          .then((c) => c.data);
+        const MergeData = await Promise.all([head, body, leg, feet]).then(
+          (value) => {
+            console.log(value);
+            return value;
+          }
+        );
+        document.getElementById("data").innerHTML = MergeData.reduce(
+          (sum, x) => sum + x,
+          ""
+        );
+      };
+
+      all();
+    </script>
+  </head>
+  <body>
+    <div id="data"></div>
+  </body>
+</html>
