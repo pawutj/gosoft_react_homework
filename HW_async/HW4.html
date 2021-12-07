@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const all = async () => {
+        const header = {
+          headers: {
+            Authorization:
+              "Bearer " + "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",
+          },
+        };
+
+        const main = await axios
+          .get("https://api.github.com/users/pariyathida/repos", header)
+          .then((c) => c.data);
+
+        const main_clean = main
+          .map((c) => c.commits_url)
+          .map((s) => s.replace("{/sha}", ""))
+          .filter(
+            (c) =>
+              c != "https://api.github.com/repos/pariyathida/SEproject/commits"
+          );
+
+        console.log(main_clean);
+
+        const allData_raw = await axios.all(
+          main_clean.map((endpoint) => axios.get(endpoint, header))
+        );
+        const allData = allData_raw.map((c) => c.data);
+        console.log(allData);
+      };
+      all();
+    </script>
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
