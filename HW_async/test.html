@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="data"></div>
+
+    <img
+      id="img2"
+      src="http://www.effigis.com/wp-content/uploads/2015/02/Infoterra_Terrasar-X_1_75_m_Radar_2007DEC15_Toronto_EEC-RE_8bits_sub_r_12.jpg"
+      width="1000px"
+      ,
+      height="500px"
+    />
+  </body>
+
+  <script>
+    const myFunc = () => console.log("test");
+
+    var c = document.querySelector("#img2");
+    console.log(c);
+    c.addEventListener("load", myFunc);
+  </script>
+</html>

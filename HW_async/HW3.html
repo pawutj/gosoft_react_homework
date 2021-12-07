@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="id01" class="w3-modal">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <div class="progress">
+            <div class="progress-bar" id="bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="main"></div>
+    <img
+      id="img1"
+      src="http://www.effigis.com/wp-content/uploads/2015/02/Iunctus_SPOT5_5m_8bit_RGB_DRA_torngat_mountains_national_park_8bits_1.jpg"
+      width="1000px"
+      ,
+      height="500px"
+    />
+    <img
+      id="img2"
+      src="http://www.effigis.com/wp-content/uploads/2015/02/Infoterra_Terrasar-X_1_75_m_Radar_2007DEC15_Toronto_EEC-RE_8bits_sub_r_12.jpg"
+      width="1000px"
+      ,
+      height="500px"
+    />
+    <img
+      src="http://www.effigis.com/wp-content/uploads/2015/02/DigitalGlobe_WorldView1_50cm_8bit_BW_DRA_Bangkok_Thailand_2009JAN06_8bits_sub_r_1.jpg"
+      id="img3"
+      width="1000px"
+      ,
+      height="500px"
+    />
+  </body>
+
+  <script>
+    document.getElementById("id01").style.display = "block";
+    const loadComplate = () => {
+      bar.style.width = perEnum[++index];
+      if (index == 4) document.getElementById("id01").style.display = "none";
+    };
+    var num = 0;
+    var perEnum = ["0%", "25%", "50%", "75%", "100%"];
+    var index = 0;
+    const listImg = [
+      "http://13.213.37.38:3000/await-hw/data.json",
+      "http://www.effigis.com/wp-content/uploads/2015/02/Iunctus_SPOT5_5m_8bit_RGB_DRA_torngat_mountains_national_park_8bits_1.jpg",
+      "http://www.effigis.com/wp-content/uploads/2015/02/Infoterra_Terrasar-X_1_75_m_Radar_2007DEC15_Toronto_EEC-RE_8bits_sub_r_12.jpg",
+      "http://www.effigis.com/wp-content/uploads/2015/02/DigitalGlobe_WorldView1_50cm_8bit_BW_DRA_Bangkok_Thailand_2009JAN06_8bits_sub_r_1.jpg",
+    ];
+    var logo1 = document.getElementById("img1");
+
+    var logo2 = document.getElementById("img2");
+    var logo3 = document.getElementById("img3");
+    var bar = document.getElementById("bar");
+    console.log(bar, "!!");
+    bar.style.width = "0%";
+    logo1.addEventListener("load", loadComplate);
+    logo2.addEventListener("load", loadComplate);
+    logo3.addEventListener("load", loadComplate);
+
+    axios.get(listImg[0]).then((res) => {
+      bar.style.width = perEnum[++index];
+      console.log(res);
+      const newMain = `<table> <tr> <td>ID</td> <td>First Name</td> <td>Last Name</td> <td>Company</td> <td>Salary</td> </tr>
+                    ${res.data.map(
+                      (c) =>
+                        `<tr><td>${c.id}</td><td>${c.firstname}</td><td>${c.lastname}</td><td>${c.company}</td><td>${c.salary}</td></tr>`
+                    )}
+                   </table>`;
+      var main = document.getElementById("main");
+
+      main.innerHTML = newMain;
+    });
+  </script>
+</html>
