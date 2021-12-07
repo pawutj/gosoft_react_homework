@@ -19,12 +19,14 @@
       const object2Array = (o) => Object.entries(o);
 
       const all = async () => {
-        const header = {
-          headers: {
-            Authorization:
-              "Bearer " + "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",
-          },
-        };
+        // const header = {
+        //   headers: {
+        //     Authorization:
+        //       "Bearer " + "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",
+        //   },
+        // }
+
+        const header = { headers: {} };
 
         const main = await axios
           .get("https://api.github.com/users/pariyathida/repos", header)
@@ -47,9 +49,9 @@
         const allData_clean = allData
           .map((d) => d.map((c) => (c.author ? c.author.login : "")))
           .flat();
-        groupAllData = object2Array(groupByCount(allData_clean)).sort((a, b) =>
-          a[1] > b[1] ? -1 : 1
-        );
+        groupAllData = object2Array(groupByCount(allData_clean))
+          .sort((a, b) => (a[1] > b[1] ? -1 : 1))
+          .filter((c) => c[0] != "");
         console.log(groupAllData);
         document.getElementById("data").innerHTML = `<table>
           <tr><td>User Name</td> <td>Contribute</td></tr>
